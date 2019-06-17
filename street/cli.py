@@ -4,6 +4,7 @@ import click
 
 from .scrape import scrape
 
+
 @click.group()
 def cli():
     pass
@@ -15,13 +16,13 @@ def cli():
 @click.option(
     '-a',
     '--agent',
-    help='The user agent name of your browser',
+    help='User agent name of your browser',
     prompt=True,
 )
 @click.option(
     '-c',
     '--cookie',
-    help='The cookie generated from your browser',
+    help='Cookie generated from your browser',
     prompt=True,
 )
 def setup(agent, cookie):
@@ -29,7 +30,7 @@ def setup(agent, cookie):
 
 
 @click.command(
-    short_help='Get earnings history for the ticker symbol'
+    short_help='Get earnings history for ticker symbol'
 )
 @click.option(
     '-o',
@@ -50,6 +51,7 @@ def ticker(outfile, symbol):
 
 cli.add_command(setup)
 cli.add_command(ticker)
+
 
 if __name__ == '__main__':
     cli()
