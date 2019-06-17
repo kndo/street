@@ -2,6 +2,7 @@
 
 import click
 
+from .errors import RequestBlocked, EarningsTableNotFound
 from .scrape import scrape
 
 
@@ -42,11 +43,17 @@ def setup(agent, cookie):
     'symbol',
 )
 def ticker(outfile, symbol):
-    earnings = scrape(symbol)
-    print(earnings)
+    try:
+        earnings = scrape(symbol)
+    except RequestBlocked:
+        print('Request was blocked by StreetInsider.com!')
+    except EarningsTableNotFound:
+        print('Earnings table was not found!')
+    else:
+        print(earnings)
 
-    if outfile:
-        earnings.to_csv(outfile, index=False)
+        if outfile:
+            earnings.to_csv(outfile, index=False)
 
 
 cli.add_command(setup)

@@ -2,6 +2,9 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import requests
 
+from .errors import RequestBlocked, EarningsTableNotFound
+
+
 def scrape(ticker_symbol):
     url = f'https://www.streetinsider.com/ec_earnings.php?q={ticker_symbol}'
 
@@ -15,11 +18,16 @@ def scrape(ticker_symbol):
     }
 
     r = requests.get(url, headers=headers)
+    if r.status_code != 200:
+        raise RequestBlocked
 
     page = r.text
     soup = BeautifulSoup(page, 'lxml')
 
     tables = soup.find_all('table', {'class': 'earning_history'})
+    if not tables:
+        raise EarningsTableNotFound
+
 
     data = []
     for table in tables:
