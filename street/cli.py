@@ -58,3 +58,7 @@ def ticker(outfile, symbol):
 
 cli.add_command(setup)
 cli.add_command(ticker)
+
+
+if __name__ == '__main__':
+    cli()
