@@ -2,18 +2,19 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import requests
 
-from .errors import RequestBlocked, EarningsTableNotFound
+from .config import read_config
+from .exceptions import RequestBlocked, EarningsTableNotFound
 
+
+REFERER = 'https://www.google.com/'
 
 def scrape(ticker_symbol):
     url = f'https://www.streetinsider.com/ec_earnings.php?q={ticker_symbol}'
 
-    cookie = ''  # To be filled in
-    user_agent = ''  # To be filled in
-    referer = 'https://www.google.com/'
+    user_agent, cookie = read_config()
     headers = {
         'User-Agent': user_agent,
-        'Referer': referer,
+        'Referer': REFERER,
         'Cookie': cookie,
     }
 

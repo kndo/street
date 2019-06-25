@@ -2,7 +2,8 @@
 
 import click
 
-from .errors import RequestBlocked, EarningsTableNotFound
+from .config import write_config
+from .exceptions import RequestBlocked, EarningsTableNotFound
 from .scrape import scrape
 
 
@@ -15,8 +16,8 @@ def cli():
     short_help='Set required parameters to bypass bot blocker'
 )
 @click.option(
-    '-a',
-    '--agent',
+    '-u',
+    '--user-agent',
     help='User agent name of your browser',
     prompt=True,
 )
@@ -26,8 +27,8 @@ def cli():
     help='Cookie generated from your browser',
     prompt=True,
 )
-def setup(agent, cookie):
-    print(agent, cookie)
+def setup(user_agent, cookie):
+    config_write(user_agent, cookie)
 
 
 @click.command(
@@ -51,14 +52,9 @@ def ticker(outfile, symbol):
         print('Earnings table was not found!')
     else:
         print(earnings)
-
         if outfile:
             earnings.to_csv(outfile, index=False)
 
 
 cli.add_command(setup)
 cli.add_command(ticker)
-
-
-if __name__ == '__main__':
-    cli()
