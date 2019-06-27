@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import requests
 
-from .config import read_config
+from .config import get_config
 from .exceptions import RequestBlocked, EarningsTableNotFound
 
 
@@ -11,7 +11,7 @@ REFERER = 'https://www.google.com/'
 def scrape(ticker_symbol):
     url = f'https://www.streetinsider.com/ec_earnings.php?q={ticker_symbol}'
 
-    user_agent, cookie = read_config()
+    user_agent, cookie = get_config()
     headers = {
         'User-Agent': user_agent,
         'Referer': REFERER,
@@ -39,8 +39,8 @@ def scrape(ticker_symbol):
             data.append(row_text)
     earn = pd.DataFrame(data)
 
-    cols = [1, 8, 9, 10, 11]
-    earn = earn.drop(cols, axis=1)
+    dropped_cols = [1, 8, 9, 10, 11]
+    earn = earn.drop(dropped_cols, axis=1)
 
     renamed_cols = {
         0: 'DATE',

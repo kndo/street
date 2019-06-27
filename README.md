@@ -23,7 +23,7 @@ Commands:
 ```
 
 
-In order to scrape the earnings history of a company from StreetInsider.com, the `street` CLI must look like it's making an HTTP request from a browser. Otherwise, the request will get blocked by the site. So, first visit the site from a browser and grab the `user-agent` and `cookie` parameters.
+In order to scrape the earnings history of a company from StreetInsider.com, the `street` CLI must look like it's making an HTTP request from a browser. Otherwise, the request will get blocked by the site. So, first visit the site from a browser and grab the `user-agent` and `cookie` parameters from the request header.
 
 To set the `user-agent` and `cookie` parameters for our CLI, use `street setup`, which will prompt you to enter the values. You can find these values, for example, by visiting `https://www.streetinsider.com/ec_earnings.php?q={TICKER_SYMBOL}` in a browser and checking the network tab of the developer tools inspector. Afterwards, the parameters are written to `.street.ini` in your `$HOME` directory. You can also set these values by editing the INI file manually.
 ```

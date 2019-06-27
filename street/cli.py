@@ -2,7 +2,7 @@
 
 import click
 
-from .config import write_config
+from .config import set_config
 from .exceptions import RequestBlocked, EarningsTableNotFound
 from .scrape import scrape
 
@@ -13,7 +13,7 @@ def cli():
 
 
 @click.command(
-    short_help='Set required parameters to bypass bot blocker'
+    short_help='Set browser parameters to bypass bot blocker'
 )
 @click.option(
     '-u',
@@ -28,7 +28,7 @@ def cli():
     prompt=True,
 )
 def setup(user_agent, cookie):
-    config_write(user_agent, cookie)
+    config_set(user_agent, cookie)
 
 
 @click.command(

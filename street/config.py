@@ -7,7 +7,7 @@ CONFIG_FILE = os.path.join(HOME, '.street.ini')
 SECTION = 'browser'
 
 
-def write_config(user_agent, cookie):
+def set_config(user_agent, cookie):
     config_parser = ConfigParser()
     config_parser.add_section(SECTION)
     config_parser.set(SECTION, 'user_agent', user_agent)
@@ -17,7 +17,7 @@ def write_config(user_agent, cookie):
         config_parser.write(config_file)
 
 
-def read_config():
+def get_config():
     config_parser = ConfigParser()
     config_parser.read(CONFIG_FILE)
     user_agent = config_parser.get(SECTION, 'user_agent')
