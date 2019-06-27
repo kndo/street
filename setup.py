@@ -55,10 +55,3 @@ setuptools.setup(
     # tests_require=test_requirements,
     # extra_require={},
 )
-
-
-# 'setup.py publish' shortcut
-if sys.argv[-1] == 'publish':
-    os.system('python setup.py sdist bdist_wheel')
-    os.system('twine upload dist/*')
-    sys.exit()

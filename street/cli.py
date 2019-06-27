@@ -28,7 +28,7 @@ def cli():
     prompt=True,
 )
 def setup(user_agent, cookie):
-    config_set(user_agent, cookie)
+    set_config(user_agent, cookie)
 
 
 @click.command(
