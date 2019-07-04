@@ -3,7 +3,7 @@
 import click
 
 from .config import set_config
-from .exceptions import RequestBlocked, EarningsTableNotFound
+from .exceptions import BadCookieWarning, RequestBlocked, EarningsTableNotFound
 from .scrape import scrape
 
 
@@ -13,7 +13,7 @@ def cli():
 
 
 @click.command(
-    short_help='Set browser parameters to bypass bot blocker'
+    short_help='Set request headers to bypass bot blocker'
 )
 @click.option(
     '-u',
@@ -47,9 +47,11 @@ def ticker(outfile, symbol):
     try:
         earnings = scrape(symbol)
     except RequestBlocked:
-        print('Request was blocked by StreetInsider.com!')
+        print('Request blocked! Check `user-agent` parameter.')
+    except BadCookieWarning:
+        print('Invalid cookie! Check `cookie` parameter.')
     except EarningsTableNotFound:
-        print('Earnings table was not found!')
+        print('No earnings table found! Check ticker `symbol`.')
     else:
         print(earnings)
         if outfile:

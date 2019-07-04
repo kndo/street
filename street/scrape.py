@@ -3,12 +3,12 @@ import pandas as pd
 import requests
 
 from .config import get_config
-from .exceptions import RequestBlocked, EarningsTableNotFound
+from .exceptions import BadCookieWarning, EarningsTableNotFound, RequestBlocked
 
-
-REFERER = 'https://www.google.com/'
 
 def scrape(ticker_symbol):
+    REFERER = 'https://www.google.com/'
+
     url = f'https://www.streetinsider.com/ec_earnings.php?q={ticker_symbol}'
 
     user_agent, cookie = get_config()
@@ -25,19 +25,28 @@ def scrape(ticker_symbol):
     page = r.text
     soup = BeautifulSoup(page, 'lxml')
 
+
+    distil_id_block = soup.find('div', {'id': 'distilIdentificationBlock'})
+    if distil_id_block:
+        raise BadCookieWarning
+
+
     tables = soup.find_all('table', {'class': 'earning_history'})
     if not tables:
         raise EarningsTableNotFound
 
 
+    target_row_classes = ['is_hilite', 'is_future', 'LiteHover']
+
     data = []
     for table in tables:
-        rows = table.find_all('tr', {'class': 'is_hilite'})
+        rows = table.find_all('tr', {'class': target_row_classes})
         for row in rows:
             cells = row.find_all('td')
             row_text = [cell.text for cell in cells]
             data.append(row_text)
     earn = pd.DataFrame(data)
+
 
     dropped_cols = [1, 8, 9, 10, 11]
     earn = earn.drop(dropped_cols, axis=1)
