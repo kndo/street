@@ -18,7 +18,7 @@ Options:
   --help  Show this message and exit.
 
 Commands:
-  setup   Set required parameters to bypass bot blocker
+  setup   Set request headers to bypass bot blocker
   ticker  Get earnings history for ticker symbol
 ```
 
@@ -83,7 +83,7 @@ $ street ticker amzn
 ```
 
 
-To save the earnings history to a CSV file, include the `-o/--output` option:
+To save the earnings history to a CSV file, include the `-o/--outfile` option:
 ```
 $ street ticker -o amzn.csv amzn
 ```
