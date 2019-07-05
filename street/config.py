@@ -1,4 +1,4 @@
-from configparser import ConfigParser
+from configparser import RawConfigParser
 import os
 
 
@@ -8,7 +8,7 @@ SECTION = 'browser'
 
 
 def set_config(user_agent, cookie):
-    config_parser = ConfigParser()
+    config_parser = RawConfigParser()
     config_parser.add_section(SECTION)
     config_parser.set(SECTION, 'user_agent', user_agent)
     config_parser.set(SECTION, 'cookie', cookie)
@@ -18,7 +18,7 @@ def set_config(user_agent, cookie):
 
 
 def get_config():
-    config_parser = ConfigParser()
+    config_parser = RawConfigParser()
     config_parser.read(CONFIG_FILE)
     user_agent = config_parser.get(SECTION, 'user_agent')
     cookie = config_parser.get(SECTION, 'cookie')

@@ -2,7 +2,11 @@ class StreetError(Exception):
     pass
 
 
-class BadCookieWarning(StreetError):
+class DistilIdentificationBlocked(StreetError):
+    pass
+
+
+class EarningsTableEmpty(StreetError):
     pass
 
 
@@ -11,4 +15,12 @@ class EarningsTableNotFound(StreetError):
 
 
 class RequestBlocked(StreetError):
+    pass
+
+
+class ResourceMovedTemporarily(StreetError):
+    pass
+
+
+class UnforeseenResponseStatusCode(StreetError):
     pass
